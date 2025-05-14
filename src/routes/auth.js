@@ -6,6 +6,7 @@ const User=require("../models/userModel")
 const Otp=require("../models/otp")
 const Profile=require("../models/profileModel")
 const jwt=require("jsonwebtoken");
+const {auth}=require("../middlewares/auth")
 require("dotenv").config()
 
 
@@ -81,7 +82,7 @@ authRouter.post("/signup",async (req,res)=>{
 
 
 //login
-authRouter.post("/login",async(req,res)=>{
+authRouter.post("/login",auth,async(req,res)=>{
 
 
     try{
@@ -110,6 +111,7 @@ authRouter.post("/login",async(req,res)=>{
              const options={
                 _id:existingUser._id,
                 accountType:existingUser.accountType,
+                emailId:existingUser.emailId,
              }
              const token=await jwt.sign(options,process.env.JWT_SECRET,{expiresIn:"2h"});
 

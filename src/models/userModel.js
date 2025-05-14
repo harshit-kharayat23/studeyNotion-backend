@@ -56,6 +56,13 @@ const userModelSchema=mongoose.Schema({
         courseProgress:{
             type:mongoose.Schema.Types.ObjectId,
             ref:"CourseProgress",
+        },
+        token:{
+            type:String,
+
+        },
+        resetPasswordExpires:{
+            type:Date,
         }
 
 
