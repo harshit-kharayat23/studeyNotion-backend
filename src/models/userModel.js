@@ -1,4 +1,5 @@
 const mongoose=require("mongoose");
+const { isLowercase } = require("validator");
 
 
 const userModelSchema=mongoose.Schema({
@@ -27,8 +28,13 @@ const userModelSchema=mongoose.Schema({
             required:true,
 
         },
+        confirmPassword:{
+            type:String,
+            required:true,
+        },
         accountType:{
             type:String,
+            lowercase:true,
             enum:["student","admin","instructor"],
             required:true,
         },
@@ -45,7 +51,7 @@ const userModelSchema=mongoose.Schema({
         },
         image:{
             type:String,
-            required:true,
+            
         },
         courseProgress:{
             type:mongoose.Schema.Types.ObjectId,
