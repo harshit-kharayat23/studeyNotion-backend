@@ -1,5 +1,5 @@
 const mongoose =require("mongoose");
-const maileSender=require("../utils/mailSender")
+const mailSender=require("../utils/mailSender")
 
 const otpSchema=mongoose.Schema({
 
@@ -19,20 +19,19 @@ const otpSchema=mongoose.Schema({
             expires:5*60,
         }
 
-
 })
 const sendVerificationEmail=async(emailId,otp)=>{
 
         try{    
 
-            const mailResponse=await maileSender(emailId,"Verification Email from Study Notion ",otp);
+            const mailResponse=await mailSender(emailId,"Verification Email from Study Notion ",otp);
             console.log("Email sent successfully",mailResponse); 
 
 
 
         }catch(err){
 
-            console.log("Error: ",err.message);
+            console.log("Error Occured by sending mails: ",err.message);
         }
 
 
@@ -40,7 +39,7 @@ const sendVerificationEmail=async(emailId,otp)=>{
 
 otpSchema.pre("save",async(next)=>{
 
-    await sendVerificationEmail(this.emailId,this.otp);
+    await sendVerificationEmail(this.emailId,this.otp); 
     next();
 
 

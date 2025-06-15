@@ -11,11 +11,12 @@ const courseSchema=mongoose.Schema({
     courseDescription:{
         type:String,
         trim:true,
+        required:true,
     },
     instructor:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
-        ref:"User"
+        ref:"User",
 
         
     },
@@ -39,7 +40,7 @@ const courseSchema=mongoose.Schema({
     thumbnail:{
         type:String,
     }
-    ,
+    , 
     tag:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Tag",
