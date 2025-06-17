@@ -37,9 +37,8 @@ const isStudent=async(req,res,next)=>{
 
     try{    
 
-        const {decoded}=req.user;
 
-        if(decoded?.accountType!=="student"){
+        if(req.user?.accountType!=="student"){
               return res.status(400).json({
                 success:false,
                 message:"Invalid accountType"
@@ -59,9 +58,9 @@ const isAdmin=async(req,res,next)=>{
 
     try{    
 
-        const {decoded}=req.user;
 
-        if(decoded?.accountType!=="admin"){
+
+        if(req.user?.accountType!=="admin"){
               return res.status(400).json({
                 success:false,
                 message:"Invalid accountType"
@@ -81,9 +80,9 @@ const isInstructor=async(req,res,next)=>{
 
     try{    
 
-        const {decoded}=req.user;
 
-        if(decoded?.accountType!=="instructor"){
+
+        if(req.user.accountType!=="instructor"){
               return res.status(400).json({
                 success:false,
                 message:"Invalid accountType"

@@ -72,7 +72,7 @@ exports.signUp = async (req, res) => {
 
     
 
-    const user={
+    const user=new User({
         firstName,
         lastName,
         password:hashPassword,
@@ -80,7 +80,7 @@ exports.signUp = async (req, res) => {
         accountType,
         additionalDetails:profileDetails._id,
         image:`https://api.dicebear.com/9.x/initials/svg?seed=${firstName}%20${lastName}`
-    }
+    })
     await user.save();
     return res.status(200).json({
         success:true,
@@ -197,7 +197,7 @@ exports.sendOTP = async (req, res) => {
       result = await Otp.findOne({ otp });
     }
 
-    const otpPayLoad = { emailId, otp };
+    const otpPayLoad = new Otp({ emailId, otp });
 
     await otpPayLoad.save();
   } catch (err) {
