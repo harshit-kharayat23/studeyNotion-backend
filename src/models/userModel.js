@@ -44,11 +44,11 @@ const userModelSchema=mongoose.Schema({
             ref:"Profile",
 
         },
-        courses:{
+        courses:[{
             type:mongoose.Schema.Types.ObjectId,
             required:true,
             ref:"Course",
-        },
+        }],
         image:{
             type:String,
             

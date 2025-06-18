@@ -1,5 +1,6 @@
+const course = require("../models/course");
 const Course=require("../models/course");
-const Tag=require("../models/tag");
+const Tag=require("../models/Category");
 const User=require("../models/userModel"); 
 const uploadImageToCloudinary = require("../utils/imageUploader");
 
@@ -52,6 +53,21 @@ exports.createCourse=async(req,res)=>{
                 instructor:instructorDetails._id,
             })
             await courseDetails.save();
+ // add new course  to user schema of instructor
+            await User.findByIdAndUpdate({_id:instructorDetails._id },
+                {
+                    $push:{
+                        courses:courseDetails._id
+                } 
+            },{new:true}
+            )
+
+            return res.status(200).json({
+                success:true,
+                message:"Course Created Successfully "
+            })
+           
+
 
         }catch(err){
            return res.status(500).json({
@@ -64,4 +80,37 @@ exports.createCourse=async(req,res)=>{
 
 
 
+}
+
+exports.showAllCourses=async(req,res)=>{
+    try{
+
+        const allCourses=await Course.find({},{courseName:true,
+            price:true,
+            thumbnail:true,
+            instructor:true,
+            ratingAndReviews:true,
+            studentsEnrolled:true,
+        }).populate("instructor").exec()
+        if(!allCourses){
+            return res.status(500).json({
+                success:false,
+                message:"Courses not found."
+            })
+        }
+    return res.status(500).json({
+                success:true,
+                message:"Fetched all courses",
+                data:allCourses,
+            })
+
+
+
+
+    }catch(err){
+            return res.status(500).json({
+                success:false,
+                message:"Error: "+err.message
+            })
+    }
 }
